@@ -1,13 +1,11 @@
 # My-terminal-dotfile
-Aesthetic &amp; minimal Linux terminal configuration
-![Terminal Preview](assets/preview.png)
 A personal Linux terminal configuration focused on simplicity, aesthetics, and productivity.
 
 Nexus Dotfiles brings together my customized terminal environment using Kitty, Zsh, Powerlevel10k, and Fastfetch.
 
 Preview
 
-<!-- Add your terminal screenshot here -->
+![Terminal Preview](assets/preview.png)
 
 
 
@@ -41,8 +39,8 @@ Installation
 
 1. Clone the repository
 
-git clone <your-repository-url>
-cd Nexus-Dotfiles
+git clone https://github.com/Nexus0x-dev/My-terminal-dotfile.git
+cd My-terminal-dotfile
 
 2. Run the installer
 
@@ -52,8 +50,6 @@ chmod +x install.sh
 The installer will:
 
 Check required configuration files.
-
-Back up existing configurations.
 
 Create symbolic links.
 
