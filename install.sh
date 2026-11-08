@@ -1,47 +1,50 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-echo "🚀 Starting terminal environment setup..."
+echo "==> Detecting package manager..."
 
-install_pkg() {
-    pkg=$1
-    if command -v "$pkg" &> /dev/null; then
-        echo "✅ [Already Installed] $pkg"
-    else
-        echo "📦 [Installing] $pkg..."
-        if command -v dnf &> /dev/null; then
-            sudo dnf install -y "$pkg"
-        elif command -v apt &> /dev/null; then
-            sudo apt update && sudo apt install -y "$pkg"
-        elif command -v pacman &> /dev/null; then
-            sudo pacman -Sy --noconfirm "$pkg"
-        else
-            echo "⚠️  Unsupported distribution for auto-install. Please install $pkg manually!"
-        fi
-    fi
-}
-
-install_pkg git
-install_pkg zsh
-install_pkg kitty
-install_pkg fastfetch
-
-mkdir -p ~/.config/kitty
-mkdir -p ~/.config/fastfetch
-
-echo "🔗 Creating symlinks..."
-ln -sf "$DOTFILES_DIR/terminal/kitty.conf" ~/.config/kitty/kitty.conf
-ln -sf "$DOTFILES_DIR/terminal/current-theme.conf" ~/.config/kitty/current-theme.conf
-ln -sf "$DOTFILES_DIR/terminal/fastfetch.jsonc" ~/.config/fastfetch/config.jsonc
-ln -sf "$DOTFILES_DIR/terminal/zshrc" ~/.zshrc
-ln -sf "$DOTFILES_DIR/terminal/p10k.zsh" ~/.p10k.zsh
-
-ZSH_PATH=$(which zsh)
-if [ "$SHELL" != "$ZSH_PATH" ] && [ -n "$ZSH_PATH" ]; then
-    echo "🔄 Changing default shell to Zsh..."
-    chsh -s "$ZSH_PATH"
+if command -v apt &> /dev/null; then
+    echo "[*] Debian/Ubuntu/Kali detected."
+    sudo apt update -y
+    sudo apt install -y git zsh kitty fastfetch curl
+elif command -v dnf &> /dev/null; then
+    echo "[*] Fedora detected."
+    sudo dnf install -y git zsh kitty fastfetch curl
+elif command -v pacman &> /dev/null; then
+    echo "[*] Arch Linux detected."
+    sudo pacman -Syu --noconfirm git zsh kitty fastfetch curl
+else
+   echo "[!] Unsupported package manager. Please install git, zsh, kitty, fastfetch manually."
 fi
 
-echo "--------------------------------------------------"
-echo "✨ Installation completed! Restart your terminal or open Kitty to enjoy."
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "==> Installing Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
+
+P10K_DIR="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+if [ ! -d "$P10K_DIR" ]; then
+    echo "==> Installing Powerlevel10k theme..."
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+fi
+
+echo "==> Creating symlinks..."
+mkdir -p ~/.config/kitty ~/.config/fastfetch
+
+rm -f ~/.zshrc
+rm -rf ~/.config/kitty
+rm -rf ~/.config/fastfetch
+
+ln -sf "$DOTFILES_DIR/terminal/zsh/.zshrc" "$HOME/.zshrc"
+ln -sf "$DOTFILES_DIR/terminal/kitty" "$HOME/.config/kitty"
+ln -sf "$DOTFILES_DIR/terminal/fastfetch" "$HOME/.config/fastfetch"
+
+if [ "$SHELL" != "$(which zsh)" ]; then
+    echo "==> Changing default shell to Zsh..."
+    chsh -s $(which zsh)
+fi
+
+echo "=========================================="
+echo "   SETUP COMPLETE! Type 'zsh' to start.   "
+echo "=========================================="
