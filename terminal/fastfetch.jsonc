@@ -10,7 +10,10 @@
   "modules": [
     "title",
     "separator",
-    "os",
+    {
+      "type": "os",
+      "format": "Fedora 44"
+    },
     "host",
     "kernel",
     "uptime",
@@ -31,7 +34,10 @@
     "cursor",
     "terminal",
     "cpu",
-    "gpu",
+    {
+      "type": "gpu",
+      "format": "AMD Radeon 760M Graphics"
+    },     
     "memory",
     "disk",
     {
