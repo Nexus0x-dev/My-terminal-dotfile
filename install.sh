@@ -27,3 +27,5 @@ fi
 echo "==============================================="
 echo "   SETUP COMPLETE! Welcome to Nexus terminal   "
 echo "==============================================="
+
+echo "==> Type 'zsh' to apply."
