@@ -3,13 +3,13 @@ A personal Linux terminal configuration focused on simplicity, aesthetics, and p
 
 Nexus Dotfiles brings together my customized terminal environment using Kitty, Zsh, Powerlevel10k, and Fastfetch.
 
-Preview
+## Preview
 
 ![Terminal Preview](assets/preview.png)
 
 
 
-Features
+## Features
 
 Kitty – Fast, GPU-accelerated terminal emulator.
 
@@ -27,34 +27,31 @@ Requirements
 
 Make sure the following applications are installed:
 
-Kitty
+- [Kitty](https://github.com/kovidgoyal/kitty) – Fast, GPU-accelerated terminal emulator.
+- [Zsh](https://www.zsh.org/) – Powerful and customizable shell.
+- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) – A highly customizable Zsh prompt.
+- [Fastfetch](https://github.com/fastfetch-cli/fastfetch) – Lightweight system information tool.
 
-Zsh
+## Installation
 
-Powerlevel10k
-
-Fastfetch
-
-Installation
-
-1. Clone the repository
-
+1.Clone the repository
+```bash
 git clone https://github.com/Nexus0x-dev/My-terminal-dotfile.git
 cd My-terminal-dotfile
-
-2. Run the installer
-
+```
+2.Run the installer
+```bash
 chmod +x install.sh
 ./install.sh
-
+```
 The installer will:
 
-Check required configuration files.
+- Check required configuration files.
 
-Create symbolic links.
+- Create symbolic links.
 
-Set Zsh as the default shell when necessary.
+- Set Zsh as the default shell when necessary.
 
-3. Restart your terminal
+3.Restart your terminal
 
 Open a new terminal session to apply the configurations.
